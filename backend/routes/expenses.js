@@ -117,11 +117,12 @@ router.get('/balances/:groupId', auth, async (req, res) => {
         user: member,
         totalPaid: 0,
         totalOwed: 0,
+        actualSpend: 0, // Only from expenses, not settlements
         netBalance: 0
       };
     });
 
-    // Calculate from expenses
+    // Calculate from expenses only (actual spending)
     expenses.forEach(expense => {
       const paidById = expense.paidBy.toString();
       
@@ -130,16 +131,17 @@ router.get('/balances/:groupId', auth, async (req, res) => {
         balances[paidById].totalPaid += expense.amount;
       }
 
-      // Add to total owed for each split
+      // Add to total owed and actual spend for each split
       expense.splits.forEach(split => {
         const userId = split.user.toString();
         if (balances[userId]) {
           balances[userId].totalOwed += split.amount;
+          balances[userId].actualSpend += split.amount; // Track actual spending
         }
       });
     });
 
-    // Apply settlements
+    // Apply settlements (only affects totalPaid and totalOwed, NOT actualSpend)
     settlements.forEach(settlement => {
       const payerId = settlement.payer.toString();
       const receiverId = settlement.receiver.toString();

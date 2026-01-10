@@ -15,7 +15,10 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
-            <h1 className="text-xl font-bold">Expense Splitter</h1>
+            <div>
+              <h1 className="text-3xl font-bold">splitBills</h1>
+              <p className="text-xs text-gray-400">Split Bills, Not Friendships</p>
+            </div>
           </div>
           
           <div className="flex items-center space-x-4">

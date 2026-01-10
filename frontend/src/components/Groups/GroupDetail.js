@@ -223,7 +223,7 @@ const GroupDetail = () => {
                   <div>
                     <h3 className="font-medium">{balance.user.name}</h3>
                     <p className="text-sm text-dark-muted">
-                      Paid: ₹{balance.totalPaid.toFixed(2)} | Spend: ₹{balance.totalOwed.toFixed(2)}
+                      Paid: ₹{balance.totalPaid.toFixed(2)} | Spend: ₹{balance.actualSpend.toFixed(2)}
                     </p>
                   </div>
                   <div className="text-right">
