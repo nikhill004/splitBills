@@ -8,8 +8,10 @@
     "server": "cd backend && npm run dev",
     "client": "cd frontend && npm run dev",
     "install-all": "npm install && cd backend && npm install && cd ../frontend && npm install",
-    "build": "npm install --prefix frontend && npm run build --prefix frontend",
-    "start": "npm install --prefix backend && npm start --prefix backend"
+    "build": "cd frontend && npm ci && npm run build",
+    "start": "cd backend && npm ci && npm start",
+    "render-build": "cd frontend && npm install && npm run build",
+    "render-start": "cd backend && npm install && npm start"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
