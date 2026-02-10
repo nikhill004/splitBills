@@ -92,7 +92,6 @@ router.get('/balances/:groupId', auth, async (req, res) => {
   try {
     const { groupId } = req.params;
 
-    // Check if group exists and user is a member
     const group = await Group.findById(groupId).populate('members', 'name email');
     if (!group) {
       return res.status(404).json({ message: 'Group not found' });
@@ -102,10 +101,7 @@ router.get('/balances/:groupId', auth, async (req, res) => {
       return res.status(403).json({ message: 'Access denied' });
     }
 
-    // Get all expenses for the group
     const expenses = await Expense.find({ group: groupId });
-    
-    // Get all settlements for the group
     const settlements = await Settlement.find({ group: groupId });
 
     // Calculate balances
@@ -117,39 +113,35 @@ router.get('/balances/:groupId', auth, async (req, res) => {
         user: member,
         totalPaid: 0,
         totalOwed: 0,
-        actualSpend: 0, // Only from expenses, not settlements
+        actualSpend: 0,
         netBalance: 0
       };
     });
 
-    // Calculate from expenses only (actual spending)
+    // Calculate from expenses
     expenses.forEach(expense => {
       const paidById = expense.paidBy.toString();
       
-      // Add to total paid
       if (balances[paidById]) {
         balances[paidById].totalPaid += expense.amount;
       }
 
-      // Add to total owed and actual spend for each split
       expense.splits.forEach(split => {
         const userId = split.user.toString();
         if (balances[userId]) {
           balances[userId].totalOwed += split.amount;
-          balances[userId].actualSpend += split.amount; // Track actual spending
+          balances[userId].actualSpend += split.amount;
         }
       });
     });
 
-    // Apply settlements (only affects totalPaid and totalOwed, NOT actualSpend)
+    // Apply settlements
     settlements.forEach(settlement => {
       const payerId = settlement.payer.toString();
       const receiverId = settlement.receiver.toString();
       
       if (balances[payerId] && balances[receiverId]) {
-        // Payer has paid more money (increases their totalPaid)
         balances[payerId].totalPaid += settlement.amount;
-        // Receiver gets money, so they owe less (increases their totalOwed, which reduces net balance)
         balances[receiverId].totalOwed += settlement.amount;
       }
     });

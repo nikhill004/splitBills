@@ -13,13 +13,8 @@ router.post('/', auth, [
   body('description').optional().trim()
 ], async (req, res) => {
   try {
-    console.log('Creating group request received');
-    console.log('Request body:', req.body);
-    console.log('User:', req.user.email);
-
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      console.log('Validation errors:', errors.array());
       return res.status(400).json({ message: 'Validation failed', errors: errors.array() });
     }
 
@@ -37,8 +32,6 @@ router.post('/', auth, [
       }
     }
 
-    console.log('Creating group with name:', name, 'and joinCode:', joinCode);
-
     const group = new Group({
       name,
       description,
@@ -47,21 +40,15 @@ router.post('/', auth, [
       members: [req.user._id]
     });
 
-    console.log('Group object created, saving to database...');
     await group.save();
-    console.log('Group saved successfully');
-
     await group.populate('members', 'name email');
     await group.populate('createdBy', 'name email');
-
-    console.log('Group populated, sending response');
 
     res.status(201).json({
       message: 'Group created successfully',
       group
     });
   } catch (error) {
-    console.error('Error creating group:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 });
@@ -162,7 +149,6 @@ router.delete('/:id', auth, async (req, res) => {
 
     res.json({ message: 'Group deleted successfully' });
   } catch (error) {
-    console.error('Error deleting group:', error);
     res.status(500).json({ message: 'Server error' });
   }
 });
