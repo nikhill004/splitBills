@@ -3,7 +3,7 @@ import axios from 'axios'
 
 const AuthContext = createContext()
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+const API_URL = 'https://splitbills-r8kg.onrender.com' || 'http://localhost:5000'
 axios.defaults.baseURL = API_URL
 
 export const useAuth = () => {
