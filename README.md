@@ -56,7 +56,7 @@ A simple yet complete expense splitting web application built with the MERN stac
 ## 📁 Project Structure
 
 ```
-expense-splitter/
+splitBills/
 ├── backend/
 │   ├── models/
 │   │   ├── User.js
@@ -268,29 +268,6 @@ The balance calculation works as follows:
 5. **Settle Up** when payments are made
 6. **Track History** of all expenses and settlements
 
-## 🎯 Perfect for Placement Projects
-
-This project demonstrates:
-- Full-stack development skills
-- RESTful API design
-- Database modeling
-- Authentication implementation
-- Modern React patterns
-- Clean, maintainable code
-- Real-world application logic
-
-## 🚀 Deployment Ready
-
-The application is structured for easy deployment:
-- Environment variables for configuration
-- Production build scripts
-- Separate frontend/backend for flexible hosting
-- MongoDB Atlas for cloud database
-
-## 📝 License
-
-This project is open source and available under the MIT License.
-
 ---
 
-**Built with ❤️ for college placement preparation**
+**Built with ❤️ by Nikhil**
