@@ -1,5 +1,7 @@
 # SplitBills
 
+preview: https://splitbills-r8kg.onrender.com
+
 A simple yet complete expense splitting web application built with the MERN stack. 
 
 ## 🚀 Features
